@@ -45,7 +45,7 @@ is_webapp_runner() {
 }
 
 create_build_log_file() {
-  local buildLogFile=".heroku/gradle-build.log"
+  local buildLogFile=".scalingo/gradle-build.log"
   echo "" > $buildLogFile
   echo "$buildLogFile"
 }

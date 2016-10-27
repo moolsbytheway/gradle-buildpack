@@ -7,7 +7,7 @@
   ],
   "ratpack": [
     "ratpack/example-ratpack-gradle-groovy-app",
-    "heroku/gradle-getting-started"
+    "Scalingo/sample-java-grails3"
   ],
   "grails": [
     "kissaten/grails3-example"

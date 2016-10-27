@@ -22,23 +22,22 @@ RSpec.configure do |config|
 end
 
 def git_repo
-  "https://github.com/heroku/heroku-buildpack-gradle.git"
+  "https://github.com/Scalingo/gradle-buildpack.git"
 end
 
 def init_app(app)
   app.setup!
-  #app.heroku.put_stack(app.name, "cedar-14")
   unless ENV['JVM_COMMON_BUILDPACK'].nil? or ENV['JVM_COMMON_BUILDPACK'].empty?
     app.set_config("JVM_COMMON_BUILDPACK" => ENV['JVM_COMMON_BUILDPACK'])
     expect(app.get_config['JVM_COMMON_BUILDPACK']).to eq(ENV['JVM_COMMON_BUILDPACK'])
   end
 end
 
-def add_database(app, heroku)
+def add_database(app, scalingo)
   Hatchet::RETRIES.times.retry do
-    heroku.post_addon(app.name, 'heroku-postgresql')
-    _, value = heroku.get_config_vars(app.name).body.detect {|key, value| key.match(/HEROKU_POSTGRESQL_[A-Z]+_URL/) }
-    heroku.put_config_vars(app.name, 'DATABASE_URL' => value)
+    scalingo.post_addon(app.name, 'scalingo-postgresql')
+    _, value = scalingo.get_config_vars(app.name).body.detect {|key, value| key.match(/SCALINGO_POSTGRESQL_[A-Z]+_URL/) }
+    scalingo.put_config_vars(app.name, 'DATABASE_URL' => value)
   end
 end
 
