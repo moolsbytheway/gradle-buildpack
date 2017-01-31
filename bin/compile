@@ -18,6 +18,10 @@ ENV_DIR=$3
 
 export_env_dir $ENV_DIR
 
+if [ "$STACK" = "scalingo" ] ; then
+  export STACK="cedar-14"
+fi
+
 if has_stage_task $BUILD_DIR; then
   DEFAULT_GRADLE_TASK="stage"
 elif is_spring_boot $BUILD_DIR; then
