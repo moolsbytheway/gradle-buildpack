@@ -45,6 +45,7 @@ is_webapp_runner() {
 }
 
 create_build_log_file() {
+  mkdir -p .scalingo
   local buildLogFile=".scalingo/gradle-build.log"
   echo "" > $buildLogFile
   echo "$buildLogFile"
