@@ -1,23 +1,17 @@
 language: java
+dist: trusty
 branches:
   only:
   - master
-before_install:
-- curl --silent https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/shunit2/shunit2-2.1.6.tgz
-  | tar xz -C /tmp/
-- git clone https://github.com/heroku/heroku-buildpack-testrunner.git /tmp/testrunner
-- "./etc/travis-setup.sh"
+before_install: bash etc/ci-setup.sh
 install: false
-script: eval $TEST_CMD
+script:
+  - /tmp/testrunner/bin/run -c
+  - bash etc/hatchet.sh
 after_script: heroku keys:remove $USER@`hostname`
 env:
   global:
-  - HATCHET_RETRIES=3
-  - HATCHET_DEPLOY_STRATEGY=git
-  - HATCHET_BUILDPACK_BASE="https://github.com/heroku/heroku-buildpack-gradle.git"
-  - HATCHET_APP_LIMIT=2
   - SHUNIT_HOME="/tmp/shunit2-2.1.6"
-  - secure: 426T7FQmTDl3nOfa+mNcvdwMm5jp46KqLZJDHbtwNeFP7eqxuhH5GLYXFY7oCKzaVRAXL+0M8dzqFUH8XJvldlb0HjQeTRlBt/dTVmfkPooUbZ9m09RYmGobjC1GqjW60VeZjxy9FKPTwyGNSJymTaEpVlr6tIYOaGarQ6rG0BA=
   matrix:
-  - TEST_CMD='sh etc/hatchet-test.sh'
-  - TEST_CMD="/tmp/testrunner/bin/run -c ."
+  - HEROKU_TEST_STACK="heroku-16"
+  - HEROKU_TEST_STACK="heroku-18"

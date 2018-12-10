@@ -12,6 +12,7 @@ $ scalingo env-set BUILDPACK_URL=https://github.com/Scalingo/gradle-buildpack#pr
 Scalingo"
 
   if grep -qi "Task 'stage' not found in root project" "$log_file"; then
+    mcount "error.no-stage-task"
     error "${header}
 It looks like your project does not contain a 'stage' task, which Scalingo needs in order
 to build your app. Our documentation article on preparing a Gradle application for Scalingo
@@ -22,6 +23,7 @@ If you're stilling having trouble, do not hesitate to contact us at support@scal
 
 ${footer}"
   elif grep -qi "Could not find or load main class org.gradle.wrapper.GradleWrapperMain" "$log_file"; then
+    mcount "error.no-gradle-jar"
     error "${header}
 It looks like you don't have a gradle-wrapper.jar file checked into your Git repo.
 Scalingo needs this JAR file in order to run Gradle.  Our documentation article on preparing
@@ -32,6 +34,7 @@ If you're stilling having trouble, do not hesitate to contact us at support@scal
 
 ${footer}"
   else
+    mcount "error.unknown"
     error "${header}
 We're sorry this build is failing. If you can't find the issue in application
 code, feel free to contact our support team at support@scalingo.com.
