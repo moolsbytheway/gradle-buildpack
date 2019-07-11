@@ -22,10 +22,6 @@ source <(curl --retry 3 -fsSL $BUILDPACK_STDLIB_URL)
 
 export_env $ENV_DIR "." "JAVA_OPTS|JAVA_TOOL_OPTIONS"
 
-if [ "$STACK" = "scalingo" ] ; then
-  export STACK="cedar-14"
-fi
-
 if has_stage_task $BUILD_DIR; then
   mcount "task.stage"
   DEFAULT_GRADLE_TASK="stage"
