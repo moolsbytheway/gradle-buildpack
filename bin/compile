@@ -66,7 +66,7 @@ fi
 BUILDCMD="./gradlew"
 chmod +x ${BUILD_DIR}/gradlew
 
-BUILDCMD="$BUILDCMD $GRADLE_TASK --debug --scan"
+BUILDCMD="$BUILDCMD $GRADLE_TASK --info --scan"
 
 cd $BUILD_DIR
 
